@@ -55,10 +55,11 @@ public class UiManager : MonoBehaviour {
 			playerT = p2Life.transform;
 		}
 		int count = playerT.childCount;
+		Debug.Log(life + " " + count + " " + isP1);
 
 		if(count < life){
 			for(int i=0;i<life-count;i++){
-				GameObject.Instantiate(heart,Vector3.zero,Quaternion.identity).transform.SetParent(transform);
+				GameObject.Instantiate(heart,Vector3.zero,Quaternion.identity).transform.SetParent(playerT);
 			}
 		}
 		else if(count > life){
@@ -83,9 +84,7 @@ public class UiManager : MonoBehaviour {
 		if(life > count){
 			life -= count;
 			for(int i=0;i<life;i++){
-				GameObject hp = GameObject.Instantiate(heart,Vector3.zero,Quaternion.identity);
-				hp.transform.SetParent(player, false);
-				hp.transform.localScale = new Vector3(1,1,1);
+				GameObject.Instantiate(heart,Vector3.zero,Quaternion.identity).transform.SetParent(player);
 			}
 		}
 		else if(life < count){

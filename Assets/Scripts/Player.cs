@@ -31,7 +31,6 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(rigid.velocity.x);
 		anim.SetFloat("Speed",rigid.velocity.x);
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 		if (grounded && !dashing) dashCount = 0;
