@@ -97,11 +97,11 @@ public class UiManager : MonoBehaviour {
 
 	}
 
-	public void GameOver(bool isP1){
+	public void GameOver(bool isP1,bool soloGame, float record=0){
 		gameOverPanel.SetActive(true);
 		string gameOvertext;
-		if(GameManager.Instance.soloGame){
-			gameOvertext = "You survived " + timeCounter.ToString("0.00") + " seconds!";
+		if(soloGame){
+			gameOvertext = "You survived " + timeCounter.ToString("0.00") + " seconds!\nRecord " + record.ToString("0.00");
 		}
 		else{
 			gameOvertext = "Player " + (isP1 ? "2" : "1") + " win!";

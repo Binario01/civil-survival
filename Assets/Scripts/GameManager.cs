@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 	public bool soloGame = false;
 	public bool gameEnded = false;
 
+	private DataSaver<HighScore> gameSaver;
+	private HighScore scores;
 
 	//Awake is always called before any Start functions
 	void Awake()
@@ -20,6 +22,8 @@ public class GameManager : MonoBehaviour
 		if (Instance == null){
 			//if not, set instance to this
 			Instance = this;
+			gameSaver = new DataSaver<HighScore>("scores",true);
+			scores = gameSaver.LoadData();
 		}
 
 		//If instance already exists and it's not this:
@@ -66,7 +70,22 @@ public class GameManager : MonoBehaviour
 
 	public void GameOver(bool isP1){
 		gameEnded = true;
-		UiManager.Instance.GameOver(isP1);
+
+		if(soloGame && UiManager.Instance.timeCounter > scores.highScore){
+			scores.highScore = UiManager.Instance.timeCounter;
+			gameSaver.SaveData(scores);
+		}
+
+		UiManager.Instance.GameOver(isP1,soloGame,scores.highScore);
 	}
 
+}
+
+[System.Serializable]
+class HighScore{
+
+	public HighScore(){
+		highScore = 0f;
+	}
+	public float highScore;
 }

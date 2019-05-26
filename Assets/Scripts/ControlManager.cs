@@ -8,7 +8,6 @@ public class ControlManager : MonoBehaviour {
 	public Dropdown[] drops;
 
 	void Start(){
-		Debug.Log(GameManager.Instance.p2Control);
 		drops[0].GetComponent<Dropdown>().value = GameManager.Instance.p1Control;
 		drops[1].GetComponent<Dropdown>().value = GameManager.Instance.p2Control+1;
 	}
