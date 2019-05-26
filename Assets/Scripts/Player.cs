@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
 			dashing = true;
 			dashCount++;
 			anim.SetBool("dash", true);
-			Invoke("stopDash", 0.1f);
+			Invoke("stopDash", 0.08f);
 			Invoke("resetDash", 0.5f);
 		}
 	}

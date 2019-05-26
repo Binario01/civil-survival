@@ -55,7 +55,6 @@ public class UiManager : MonoBehaviour {
 			playerT = p2Life.transform;
 		}
 		int count = playerT.childCount;
-		Debug.Log(life + " " + count + " " + isP1);
 
 		if(count < life){
 			for(int i=0;i<life-count;i++){
