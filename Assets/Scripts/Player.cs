@@ -13,22 +13,26 @@ public class Player : MonoBehaviour {
 	bool dashing = false;
 
 	int dashCount = 0;
-	public float dashSpeed = 15.0f;
+	public float dashSpeed = 8.0f;
 	public float fallFactor = 2.5f;
 	public float lowJumpFactor = 2.0f;
 	public float jumpSpeed = 5.0f;
 	bool grounded;
 	Transform groundCheck;
 	public LayerMask groundLayer;
+	Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		rigid = this.GetComponent<Rigidbody2D>();
+		anim = this.GetComponent<Animator>();
 		groundCheck = transform.GetChild(0);
 	}
 
 	// Update is called once per frame
 	void Update () {
+		Debug.Log(rigid.velocity.x);
+		anim.SetFloat("Speed",rigid.velocity.x);
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 		if (grounded && !dashing) dashCount = 0;
 		if(!dashing){
