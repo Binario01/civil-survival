@@ -44,12 +44,14 @@ public class RockSpawnerManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		spawnCounter += Time.deltaTime;
-		if(spawnCounter > timeToSpawn){
-			spawnCounter -= timeToSpawn;
-			int index = getIndex();
-			// Spawn
-			spawners[index].Spawn(rock);
+		if(!GameManager.Instance.gameEnded){
+			spawnCounter += Time.deltaTime;
+			if(spawnCounter > timeToSpawn){
+				spawnCounter -= timeToSpawn;
+				int index = getIndex();
+				// Spawn
+				spawners[index].Spawn(rock);
+			}
 		}
 	}
 

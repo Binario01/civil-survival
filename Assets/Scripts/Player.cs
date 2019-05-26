@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 		rigid = this.GetComponent<Rigidbody2D>();
 		groundCheck = transform.GetChild(0);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour {
 		//vertical
 		if(Input.GetButtonDown(axis("jump")) && grounded)
 			rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
-		
+
 		if(rigid.velocity.y < 0.0f)
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (fallFactor - 1.0f) * Time.deltaTime;
 		else if (rigid.velocity.y > 0.0f && !Input.GetButton(axis("jump")))
@@ -66,7 +66,6 @@ public class Player : MonoBehaviour {
 			Vector2 dir = new Vector2(x,y).normalized;
 
 			rigid.velocity = dir * dashSpeed;
-			Debug.Log(dir);
 			dashing = true;
 			Invoke("stopDash", 0.1f);
 		}

@@ -5,11 +5,14 @@ using UnityEngine;
 public class Life : MonoBehaviour {
 
 	private int maxLife=3;
-	private int currentLife=1;
+	private int currentLife=2;
+	private bool isP1;
 
 	// Use this for initialization
 	void Start () {
+		isP1 = gameObject.name == "P1";
 
+		UiManager.Instance.InitLife(currentLife,isP1);
 	}
 
 	public void GainLife(int life=1){
@@ -17,14 +20,14 @@ public class Life : MonoBehaviour {
 		if(currentLife > maxLife){
 			currentLife = maxLife;
 		}
-		UiManager.Instance.UpdateLife(currentLife);
+		UiManager.Instance.UpdateLife(currentLife, isP1);
 	}
 
 	public void TakeDamage(int damage=1){
 		currentLife -= damage;
-		UiManager.Instance.UpdateLife(currentLife);
+		UiManager.Instance.UpdateLife(currentLife, isP1);
 		if(currentLife <= 0){
-			GameManager.Instance.GameOver();
+			GameManager.Instance.GameOver(isP1);
 		}
 	}
 
