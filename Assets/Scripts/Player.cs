@@ -11,6 +11,8 @@ public class Player : MonoBehaviour {
 	public float speed;
 
 	bool dashing = false;
+
+	int dashCount = 0;
 	public float dashSpeed = 15.0f;
 	public float fallFactor = 2.5f;
 	public float lowJumpFactor = 2.0f;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+		if (grounded && !dashing) dashCount = 0;
 		if(!dashing){
 			Run();
 			Jump();
@@ -57,7 +60,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Dash(){
-		if(Input.GetButtonDown(axis("dash"))){
+		if(Input.GetButtonDown(axis("dash")) && !dashing && dashCount < 1){
 			float x = Input.GetAxis(axis("hor"));
 			float y = Input.GetAxis(axis("ver"));
 			if(grounded)
@@ -68,12 +71,18 @@ public class Player : MonoBehaviour {
 			rigid.velocity = dir * dashSpeed;
 			Debug.Log(dir);
 			dashing = true;
+			dashCount++;
+
 			Invoke("stopDash", 0.1f);
+			Invoke("resetDash", 0.5f);
 		}
 	}
 
 	void stopDash(){
 		rigid.velocity = Vector2.zero;
+	}
+
+	void resetDash(){
 		dashing = false;
 	}
 
