@@ -31,8 +31,6 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(rigid.velocity.x);
-		anim.SetFloat("Speed",rigid.velocity.x);
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 		if (grounded && !dashing) dashCount = 0;
 		if(!dashing){
@@ -44,12 +42,20 @@ public class Player : MonoBehaviour {
 
 	void Run(){
 		//horizontal
-		if (Input.GetAxis(axis("hor")) > 0.0f)
+		bool run;
+		if (Input.GetAxis(axis("hor")) > 0.0f){
 			rigid.velocity = new Vector2(speed * Time.deltaTime, rigid.velocity.y);
-		else if (Input.GetAxis(axis("hor")) < 0.0f)
+			transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+			run = true;
+		}else if (Input.GetAxis(axis("hor")) < 0.0f){
 			rigid.velocity = new Vector2(- speed * Time.deltaTime, rigid.velocity.y);
-		else
+			transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+			run = true;
+		}else{
 			rigid.velocity = new Vector2(0.0f, rigid.velocity.y);
+			run = false;
+		}
+		anim.SetBool("run", run);
 	}
 
 	void Jump(){
@@ -61,6 +67,8 @@ public class Player : MonoBehaviour {
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (fallFactor - 1.0f) * Time.deltaTime;
 		else if (rigid.velocity.y > 0.0f && !Input.GetButton(axis("jump")))
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpFactor - 1.0f) * Time.deltaTime;
+		
+		anim.SetBool("jump", !grounded);
 	}
 
 	void Dash(){
@@ -72,10 +80,21 @@ public class Player : MonoBehaviour {
 
 			Vector2 dir = new Vector2(x,y).normalized;
 
+			if (dir.magnitude == 0.0f){
+				if (rigid.velocity.x > 0.0f)
+					dir = Vector2.right;
+				else if (rigid.velocity.x > 0.0f)
+					dir = Vector2.left;
+				else if (!grounded)
+					dir = Vector2.up;
+				else
+					dir = Vector2.left * transform.localScale.x;
+			}
+
 			rigid.velocity = dir * dashSpeed;
 			dashing = true;
 			dashCount++;
-
+			anim.SetBool("dash", true);
 			Invoke("stopDash", 0.1f);
 			Invoke("resetDash", 0.5f);
 		}
@@ -83,6 +102,7 @@ public class Player : MonoBehaviour {
 
 	void stopDash(){
 		rigid.velocity = Vector2.zero;
+		anim.SetBool("dash", false);
 	}
 
 	void resetDash(){
