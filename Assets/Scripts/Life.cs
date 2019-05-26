@@ -5,7 +5,7 @@ using UnityEngine;
 public class Life : MonoBehaviour {
 
 	private int maxLife=3;
-	private int currentLife=2;
+	private int currentLife=1;
 	private bool isP1;
 
 	// Use this for initialization
@@ -24,6 +24,8 @@ public class Life : MonoBehaviour {
 	}
 
 	public void TakeDamage(int damage=1){
+		if(GameManager.Instance.gameEnded)
+			return;
 		currentLife -= damage;
 		UiManager.Instance.UpdateLife(currentLife, isP1);
 		if(currentLife <= 0){

@@ -78,6 +78,7 @@ public class UiManager : MonoBehaviour {
 		else{
 			player = p2Life.transform;
 		}
+
 		int count = player.childCount;
 		if(life > count){
 			life -= count;
@@ -98,7 +99,14 @@ public class UiManager : MonoBehaviour {
 
 	public void GameOver(bool isP1){
 		gameOverPanel.SetActive(true);
-		gameOverPanel.transform.Find("Win Text").GetComponent<Text>().text = "Player " + (isP1 ? "1" : "2") + " win!";
+		string gameOvertext;
+		if(GameManager.Instance.soloGame){
+			gameOvertext = "You survived " + timeCounter.ToString("0.00") + " seconds!";
+		}
+		else{
+			gameOvertext = "Player " + (isP1 ? "2" : "1") + " win!";
+		}
+		gameOverPanel.transform.Find("Win Text").GetComponent<Text>().text = gameOvertext;
 	}
 
 	void Update(){

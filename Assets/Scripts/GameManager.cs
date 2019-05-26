@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
 	public static GameManager Instance = null;                //Static instance of GameManager which allows it to be accessed by any other script.
 	public GameObject p1,p2;
+	public int p1Control=0,p2Control=-1;
 	public bool soloGame = false;
 	public bool gameEnded = false;
 
@@ -25,26 +26,34 @@ public class GameManager : MonoBehaviour
 		else if (Instance != this){
 			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
 			Destroy(gameObject);
+			return;
 		}
 
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(gameObject);
+
 		SceneManager.sceneLoaded += OnSceneLoaded;
 
 		//Call the InitGame function to initialize the first level
-		InitGame();
+		//InitGame();
 	}
 
 	void InitGame(){
 		p1 = GameObject.Find("P1");
 		p2 = GameObject.Find("P2");
 
-		gameEnded = false;
-		if(p2 == null){
-			// TODO: SOLO GAME
+		if(p2Control != -1){
+			soloGame = false;
+			p2.GetComponent<Player>().control = p2Control;
+		}
+		else{
 			soloGame = true;
+			Destroy(p2);
 			UiManager.Instance.InitLife(0,false);
 		}
+
+		p1.GetComponent<Player>().control = p1Control;
+		gameEnded = false;
 
 	}
 
