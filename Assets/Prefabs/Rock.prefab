@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4098178042942502}
   - component: {fileID: 212379061346055160}
   - component: {fileID: 50314666006257650}
+  - component: {fileID: 114083263273777232}
+  - component: {fileID: 58279565265619228}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Untagged
@@ -61,6 +63,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58279565265619228
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613822302655732}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
+--- !u!114 &114083263273777232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613822302655732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d42362915f9fcf488b810ef7ca9c9e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212379061346055160
 SpriteRenderer:
   m_ObjectHideFlags: 1
