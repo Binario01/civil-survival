@@ -10,7 +10,7 @@ public class Rock : MonoBehaviour {
 		Destroy(this,2);
 	}
 
-	void OnCollisionEnter2D(Collision2D col)
+	void OnTriggerEnter2D(Collider2D col)
     {
 		if(col.gameObject.CompareTag("Player")){
 			col.gameObject.GetComponent<Life>().TakeDamage(damage);

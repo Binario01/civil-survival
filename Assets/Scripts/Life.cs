@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Life : MonoBehaviour {
 
-	private int maxLife=5;
+	private int maxLife=3;
 	private int currentLife=1;
 
 	// Use this for initialization
@@ -14,12 +14,17 @@ public class Life : MonoBehaviour {
 
 	public void GainLife(int life=1){
 		currentLife += life;
+		if(currentLife > maxLife){
+			currentLife = maxLife;
+		}
+		UiManager.Instance.UpdateLife(currentLife);
 	}
 
 	public void TakeDamage(int damage=1){
 		currentLife -= damage;
+		UiManager.Instance.UpdateLife(currentLife);
 		if(currentLife <= 0){
-			GameManager.instance.GameOver();
+			GameManager.Instance.GameOver();
 		}
 	}
 
