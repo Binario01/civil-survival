@@ -13,22 +13,26 @@ public class Player : MonoBehaviour {
 	bool dashing = false;
 
 	int dashCount = 0;
-	public float dashSpeed = 15.0f;
+	public float dashSpeed = 8.0f;
 	public float fallFactor = 2.5f;
 	public float lowJumpFactor = 2.0f;
 	public float jumpSpeed = 5.0f;
 	bool grounded;
 	Transform groundCheck;
 	public LayerMask groundLayer;
+	Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		rigid = this.GetComponent<Rigidbody2D>();
+		anim = this.GetComponent<Animator>();
 		groundCheck = transform.GetChild(0);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
+		Debug.Log(rigid.velocity.x);
+		anim.SetFloat("Speed",rigid.velocity.x);
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 		if (grounded && !dashing) dashCount = 0;
 		if(!dashing){
@@ -52,7 +56,7 @@ public class Player : MonoBehaviour {
 		//vertical
 		if(Input.GetButtonDown(axis("jump")) && grounded)
 			rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
-		
+
 		if(rigid.velocity.y < 0.0f)
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (fallFactor - 1.0f) * Time.deltaTime;
 		else if (rigid.velocity.y > 0.0f && !Input.GetButton(axis("jump")))
@@ -69,7 +73,6 @@ public class Player : MonoBehaviour {
 			Vector2 dir = new Vector2(x,y).normalized;
 
 			rigid.velocity = dir * dashSpeed;
-			Debug.Log(dir);
 			dashing = true;
 			dashCount++;
 
