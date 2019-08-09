@@ -11,7 +11,6 @@ public class Life : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isP1 = gameObject.name == "P1";
-
 		UiManager.Instance.InitLife(currentLife,isP1);
 	}
 

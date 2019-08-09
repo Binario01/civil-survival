@@ -5,10 +5,10 @@ using UnityEngine;
 public class RockSpawnerManager : MonoBehaviour {
 
 	public RockSpawner rockSpawner;
-	public GameObject rock;
+	public GameObject[] rocks;
 
 	private int[] spawnerFreq;
-	private float timeToSpawn = .5f;
+	private float timeToSpawn = 1.5f;
 	private float spawnCounter = 0f;
 
 	private Camera mainCamera;
@@ -50,7 +50,7 @@ public class RockSpawnerManager : MonoBehaviour {
 				spawnCounter -= timeToSpawn;
 				int index = getIndex();
 				// Spawn
-				spawners[index].Spawn(rock);
+				spawners[index].Spawn(rocks[Random.Range(0,3)]);
 			}
 		}
 	}

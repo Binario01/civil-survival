@@ -67,7 +67,7 @@ public class Player : MonoBehaviour {
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (fallFactor - 1.0f) * Time.deltaTime;
 		else if (rigid.velocity.y > 0.0f && !Input.GetButton(axis("jump")))
 			rigid.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpFactor - 1.0f) * Time.deltaTime;
-		
+
 		anim.SetBool("jump", !grounded);
 	}
 
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
 			dashing = true;
 			dashCount++;
 			anim.SetBool("dash", true);
-			Invoke("stopDash", 0.1f);
+			Invoke("stopDash", 0.08f);
 			Invoke("resetDash", 0.5f);
 		}
 	}
